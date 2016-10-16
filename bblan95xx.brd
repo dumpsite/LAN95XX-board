@@ -2448,6 +2448,26 @@ design rules under a new name.</description>
 <via x="38.75" y="13.25" extent="1-16" drill="0.3" diameter="1.016" shape="octagon"/>
 <via x="38.125" y="12" extent="1-16" drill="0.3" diameter="1.016" shape="octagon"/>
 <via x="39.25" y="11.125" extent="1-16" drill="0.3" diameter="1.016" shape="octagon"/>
+<via x="22.25" y="27.75" extent="1-16" drill="0.3" diameter="1.016" shape="octagon"/>
+<via x="23.625" y="27.75" extent="1-16" drill="0.3" diameter="1.016" shape="octagon"/>
+<via x="25" y="27.75" extent="1-16" drill="0.3" diameter="1.016" shape="octagon"/>
+<via x="26.375" y="27.75" extent="1-16" drill="0.3" diameter="1.016" shape="octagon"/>
+<via x="27.75" y="27.75" extent="1-16" drill="0.3" diameter="1.016" shape="octagon"/>
+<via x="22.25" y="26.375" extent="1-16" drill="0.3" diameter="1.016" shape="octagon"/>
+<via x="23.625" y="26.375" extent="1-16" drill="0.3" diameter="1.016" shape="octagon"/>
+<via x="26.375" y="26.375" extent="1-16" drill="0.3" diameter="1.016" shape="octagon"/>
+<via x="27.75" y="26.375" extent="1-16" drill="0.3" diameter="1.016" shape="octagon"/>
+<via x="22.25" y="25" extent="1-16" drill="0.3" diameter="1.016" shape="octagon"/>
+<via x="22.25" y="23.625" extent="1-16" drill="0.3" diameter="1.016" shape="octagon"/>
+<via x="22.25" y="22.25" extent="1-16" drill="0.3" diameter="1.016" shape="octagon"/>
+<via x="27.75" y="25" extent="1-16" drill="0.3" diameter="1.016" shape="octagon"/>
+<via x="23.625" y="23.625" extent="1-16" drill="0.3" diameter="1.016" shape="octagon"/>
+<via x="26.375" y="23.625" extent="1-16" drill="0.3" diameter="1.016" shape="octagon"/>
+<via x="27.75" y="23.625" extent="1-16" drill="0.3" diameter="1.016" shape="octagon"/>
+<via x="23.625" y="22.25" extent="1-16" drill="0.3" diameter="1.016" shape="octagon"/>
+<via x="25" y="22.25" extent="1-16" drill="0.3" diameter="1.016" shape="octagon"/>
+<via x="26.375" y="22.25" extent="1-16" drill="0.3" diameter="1.016" shape="octagon"/>
+<via x="27.75" y="22.25" extent="1-16" drill="0.3" diameter="1.016" shape="octagon"/>
 </signal>
 <signal name="VDD18CORE">
 <contactref element="C13" pad="2"/>
