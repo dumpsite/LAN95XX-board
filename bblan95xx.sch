@@ -7599,18 +7599,18 @@ Various standard crystals. Proven footprints. Spark Fun Electronics SKU : COM-00
 <part name="+3V1" library="supply1" deviceset="+3V3" device=""/>
 <part name="GND1" library="supply1" deviceset="GND" device=""/>
 <part name="L1" library="resistor" deviceset="R-EU_" device="R0805" value="120Rat100MHz"/>
-<part name="C1" library="resistor" deviceset="C-EU" device="C0603K" value=".1u"/>
-<part name="C2" library="resistor" deviceset="C-EU" device="C0603K" value=".1u"/>
-<part name="C3" library="resistor" deviceset="C-EU" device="C0603K" value=".1u"/>
-<part name="C4" library="resistor" deviceset="C-EU" device="C0603K" value=".1u"/>
-<part name="C5" library="resistor" deviceset="C-EU" device="C0603K" value=".1u"/>
-<part name="C6" library="resistor" deviceset="C-EU" device="C0603K" value=".1u"/>
-<part name="C7" library="resistor" deviceset="C-EU" device="C0603K" value=".1u"/>
-<part name="C8" library="resistor" deviceset="C-EU" device="C0603K" value=".1u"/>
+<part name="C1" library="resistor" deviceset="C-EU" device="C0805K" value=".1u"/>
+<part name="C2" library="resistor" deviceset="C-EU" device="C0805K" value=".1u"/>
+<part name="C3" library="resistor" deviceset="C-EU" device="C0805K" value=".1u"/>
+<part name="C4" library="resistor" deviceset="C-EU" device="C0805K" value=".1u"/>
+<part name="C5" library="resistor" deviceset="C-EU" device="C0805K" value=".1u"/>
+<part name="C6" library="resistor" deviceset="C-EU" device="C0805K" value=".1u"/>
+<part name="C7" library="resistor" deviceset="C-EU" device="C0805K" value=".1u"/>
+<part name="C8" library="resistor" deviceset="C-EU" device="C0805K" value=".1u"/>
 <part name="C9" library="resistor" deviceset="C-EU" device="C0603K" value=".1u"/>
 <part name="C10" library="resistor" deviceset="C-EU" device="C0603K" value=".1u"/>
 <part name="C11" library="resistor" deviceset="C-EU" device="C0603K" value=".1u"/>
-<part name="C12" library="resistor" deviceset="C-EU" device="C0603K" value=".1u"/>
+<part name="C12" library="resistor" deviceset="C-EU" device="C0805K" value=".1u"/>
 <part name="C13" library="resistor" deviceset="C-EU" device="C0805K" value="4.7u"/>
 <part name="C14" library="resistor" deviceset="C-EU" device="C0603K" value=".1u"/>
 <part name="C15" library="resistor" deviceset="C-EU" device="C0603K" value=".1u"/>
@@ -7634,7 +7634,7 @@ Various standard crystals. Proven footprints. Spark Fun Electronics SKU : COM-00
 <part name="GND6" library="supply1" deviceset="GND" device=""/>
 <part name="GND7" library="supply1" deviceset="GND" device=""/>
 <part name="C25" library="resistor" deviceset="C-EU" device="C0805K" value="1u"/>
-<part name="C26" library="resistor" deviceset="C-EU" device="C0603K" value=".1u"/>
+<part name="C26" library="resistor" deviceset="C-EU" device="C0805K" value=".1u"/>
 <part name="GND8" library="supply1" deviceset="GND" device=""/>
 <part name="H1" library="holes" deviceset="MOUNT-HOLE" device="3.2"/>
 <part name="H2" library="holes" deviceset="MOUNT-HOLE" device="3.2"/>
@@ -7650,7 +7650,7 @@ Various standard crystals. Proven footprints. Spark Fun Electronics SKU : COM-00
 <part name="GND10" library="supply1" deviceset="GND" device=""/>
 <part name="L3" library="resistor" deviceset="R-EU_" device="R0805" value="120Rat100MHz"/>
 <part name="C19" library="resistor" deviceset="C-EU" device="C0805K" value="1.0u"/>
-<part name="C27" library="resistor" deviceset="C-EU" device="C0603K" value=".1u"/>
+<part name="C27" library="resistor" deviceset="C-EU" device="C0805K" value=".1u"/>
 <part name="C16" library="resistor" deviceset="C-EU" device="C0805K" value="4.7u"/>
 <part name="C28" library="resistor" deviceset="C-EU" device="C0603K" value=".1u"/>
 <part name="GND11" library="supply1" deviceset="GND" device=""/>
@@ -7660,6 +7660,7 @@ Various standard crystals. Proven footprints. Spark Fun Electronics SKU : COM-00
 <part name="R1" library="resistor" deviceset="R-EU_" device="R0603"/>
 <part name="C29" library="resistor" deviceset="C-EU" device="C0603K" value=".1u"/>
 <part name="R8" library="resistor" deviceset="R-EU_" device="R0402"/>
+<part name="C30" library="resistor" deviceset="C-EU" device="C0603K" value=".1u"/>
 </parts>
 <sheets>
 <sheet>
@@ -7754,6 +7755,7 @@ Various standard crystals. Proven footprints. Spark Fun Electronics SKU : COM-00
 <instance part="R1" gate="G$1" x="-198.12" y="63.5" rot="R90"/>
 <instance part="C29" gate="G$1" x="-205.74" y="73.66" rot="R90"/>
 <instance part="R8" gate="G$1" x="-149.86" y="73.66" rot="R180"/>
+<instance part="C30" gate="G$1" x="-205.74" y="93.98" rot="R90"/>
 </instances>
 <busses>
 </busses>
@@ -7837,7 +7839,8 @@ Various standard crystals. Proven footprints. Spark Fun Electronics SKU : COM-00
 <wire x1="-187.96" y1="111.76" x2="-187.96" y2="106.68" width="0.1524" layer="91"/>
 <wire x1="-187.96" y1="106.68" x2="-187.96" y2="101.6" width="0.1524" layer="91"/>
 <wire x1="-187.96" y1="101.6" x2="-187.96" y2="96.52" width="0.1524" layer="91"/>
-<wire x1="-187.96" y1="96.52" x2="-187.96" y2="91.44" width="0.1524" layer="91"/>
+<wire x1="-187.96" y1="96.52" x2="-187.96" y2="93.98" width="0.1524" layer="91"/>
+<wire x1="-187.96" y1="93.98" x2="-187.96" y2="91.44" width="0.1524" layer="91"/>
 <wire x1="-187.96" y1="91.44" x2="-187.96" y2="86.36" width="0.1524" layer="91"/>
 <wire x1="-180.34" y1="116.84" x2="-187.96" y2="116.84" width="0.1524" layer="91"/>
 <pinref part="IC1" gate="G$1" pin="10VDD33A"/>
@@ -7896,6 +7899,9 @@ Various standard crystals. Proven footprints. Spark Fun Electronics SKU : COM-00
 <junction x="-187.96" y="73.66"/>
 <wire x1="-187.96" y1="73.66" x2="-154.94" y2="73.66" width="0.1524" layer="91"/>
 <pinref part="R8" gate="G$1" pin="2"/>
+<pinref part="C30" gate="G$1" pin="2"/>
+<wire x1="-200.66" y1="93.98" x2="-187.96" y2="93.98" width="0.1524" layer="91"/>
+<junction x="-187.96" y="93.98"/>
 </segment>
 </net>
 <net name="GND" class="0">
@@ -7913,7 +7919,8 @@ Various standard crystals. Proven footprints. Spark Fun Electronics SKU : COM-00
 <wire x1="-213.36" y1="111.76" x2="-213.36" y2="106.68" width="0.1524" layer="91"/>
 <wire x1="-213.36" y1="106.68" x2="-213.36" y2="101.6" width="0.1524" layer="91"/>
 <wire x1="-213.36" y1="101.6" x2="-213.36" y2="96.52" width="0.1524" layer="91"/>
-<wire x1="-213.36" y1="96.52" x2="-213.36" y2="91.44" width="0.1524" layer="91"/>
+<wire x1="-213.36" y1="96.52" x2="-213.36" y2="93.98" width="0.1524" layer="91"/>
+<wire x1="-213.36" y1="93.98" x2="-213.36" y2="91.44" width="0.1524" layer="91"/>
 <wire x1="-213.36" y1="91.44" x2="-213.36" y2="86.36" width="0.1524" layer="91"/>
 <wire x1="-213.36" y1="86.36" x2="-213.36" y2="78.74" width="0.1524" layer="91"/>
 <wire x1="-213.36" y1="78.74" x2="-213.36" y2="73.66" width="0.1524" layer="91"/>
@@ -7955,6 +7962,9 @@ Various standard crystals. Proven footprints. Spark Fun Electronics SKU : COM-00
 <pinref part="C29" gate="G$1" pin="1"/>
 <wire x1="-208.28" y1="73.66" x2="-213.36" y2="73.66" width="0.1524" layer="91"/>
 <junction x="-213.36" y="73.66"/>
+<pinref part="C30" gate="G$1" pin="1"/>
+<wire x1="-208.28" y1="93.98" x2="-213.36" y2="93.98" width="0.1524" layer="91"/>
+<junction x="-213.36" y="93.98"/>
 </segment>
 <segment>
 <pinref part="C14" gate="G$1" pin="1"/>
