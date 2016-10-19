@@ -2074,12 +2074,18 @@ design rules under a new name.</description>
 <element name="H2" library="holes" package="3,2" value="MOUNT-HOLE3.2" x="45.75" y="45.75"/>
 <element name="H3" library="holes" package="3,2" value="MOUNT-HOLE3.2" x="4.25" y="4.25"/>
 <element name="H4" library="holes" package="3,2" value="MOUNT-HOLE3.2" x="45.75" y="4.25"/>
-<element name="JPUSBDOWN" library="pinhead" package="1X11" value="" x="25" y="41.5" rot="R180"/>
+<element name="JPUSBDOWN" library="pinhead" package="1X11" value="" x="25" y="41.5" smashed="yes" rot="MR0">
+<attribute name="NAME" x="39.0462" y="39.6712" size="1.27" layer="25" ratio="10" rot="R180"/>
+<attribute name="VALUE" x="38.97" y="44.675" size="1.27" layer="27" rot="R180"/>
+</element>
 <element name="JPGPIO" library="pinhead" package="1X13" value="" x="8.5" y="25" smashed="yes" rot="MR270">
 <attribute name="NAME" x="10.4538" y="37.7112" size="1.27" layer="25" ratio="10" rot="R270"/>
 <attribute name="VALUE" x="5.325" y="41.51" size="1.27" layer="27" rot="R270"/>
 </element>
-<element name="JPMISC" library="pinhead" package="1X11" value="" x="25" y="8.5" rot="R0"/>
+<element name="JPMISC" library="pinhead" package="1X11" value="" x="25" y="8.5" smashed="yes" rot="MR180">
+<attribute name="NAME" x="10.9538" y="10.3288" size="1.27" layer="25" ratio="10"/>
+<attribute name="VALUE" x="11.03" y="5.325" size="1.27" layer="27"/>
+</element>
 <element name="JPUSBETHERNET" library="pinhead" package="1X13" value="" x="41.5" y="25" smashed="yes" rot="MR90">
 <attribute name="NAME" x="39.4212" y="12.2888" size="1.27" layer="25" ratio="10" rot="R90"/>
 <attribute name="VALUE" x="44.675" y="8.49" size="1.27" layer="27" rot="R90"/>
