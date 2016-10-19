@@ -2480,6 +2480,42 @@ design rules under a new name.</description>
 <vertex x="41.5" y="8.5"/>
 <vertex x="8.5" y="8.5"/>
 </polygon>
+<polygon width="0.254" layer="14" spacing="0.254" isolate="0.254" orphans="yes" thermals="no" rank="6">
+<vertex x="5" y="50"/>
+<vertex x="0" y="50"/>
+<vertex x="0" y="0"/>
+<vertex x="50" y="0"/>
+<vertex x="50" y="50"/>
+<vertex x="5.0001" y="50"/>
+<vertex x="5.0001" y="45"/>
+<vertex x="45" y="45"/>
+<vertex x="45" y="5"/>
+<vertex x="5" y="5"/>
+</polygon>
+<polygon width="0.254" layer="16" spacing="0.254" isolate="0.254" orphans="yes" thermals="no" rank="6">
+<vertex x="5" y="50"/>
+<vertex x="0" y="50"/>
+<vertex x="0" y="0"/>
+<vertex x="50" y="0"/>
+<vertex x="50" y="50"/>
+<vertex x="5.0001" y="50"/>
+<vertex x="5.0001" y="45"/>
+<vertex x="45" y="45"/>
+<vertex x="45" y="5"/>
+<vertex x="5" y="5"/>
+</polygon>
+<polygon width="0.254" layer="1" spacing="0.254" isolate="0.254" orphans="yes" thermals="no" rank="6">
+<vertex x="5" y="50"/>
+<vertex x="0" y="50"/>
+<vertex x="0" y="0"/>
+<vertex x="50" y="0"/>
+<vertex x="50" y="50"/>
+<vertex x="5.0001" y="50"/>
+<vertex x="5.0001" y="45"/>
+<vertex x="45" y="45"/>
+<vertex x="45" y="5"/>
+<vertex x="5" y="5"/>
+</polygon>
 </signal>
 <signal name="VDD18CORE">
 <contactref element="C13" pad="2"/>
