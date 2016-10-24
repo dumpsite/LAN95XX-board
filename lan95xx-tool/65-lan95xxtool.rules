@@ -1,0 +1,2 @@
+# 0424:ec00 Standard Microsystems Corp. SMSC9512/9514 Fast Ethernet Adapter
+ATTRS{idVendor}=="0424", ATTRS{idProduct}=="ec00", SUBSYSTEMS=="usb", ACTION=="add", MODE="0664", GROUP="plugdev"
