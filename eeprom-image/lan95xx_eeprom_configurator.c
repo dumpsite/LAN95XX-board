@@ -301,9 +301,9 @@ USBMSG const struct LAN95XXEEPROMlayout lan95xx_eeprom_header = {
    .idHubVendor						= htole16(0x0424),
    .idHubProduct					= htole16(0x9510 | XTYPE_LAN951X),
    .idHubDevice						= htole16(0x0200),
-   .cfg_data						= {0x1f,0x18,0x00},
+   .cfg_data						= {(0x1b)|(LAN951X_SELFPOWERED*(0x80)),0x10,0x00},
    .nrd							= 0x02,
-//TODO:
+//TODO (deactivate all USB downstream ports):
    .pds							= 0x3c,
    .pdb							= 0x3c,
 
