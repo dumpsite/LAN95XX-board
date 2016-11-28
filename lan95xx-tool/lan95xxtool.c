@@ -37,12 +37,14 @@
 
 static void usage(char *name)
 {
+#define __plusstr	"[Bus] [Device]"
     fprintf(stderr, "usage:\n");
     fprintf(stderr, "  %s help\n\n", name);
     fprintf(stderr, "  %s list\n\n", name);
-    fprintf(stderr, "  %s chipid\n\n", name);
-    fprintf(stderr, "  %s rxstats\n\n", name);
-    fprintf(stderr, "  %s txstats\n\n", name);
+    fprintf(stderr, "  %s chipid "__plusstr"\n\n", name);
+    fprintf(stderr, "  %s rxstats "__plusstr"\n\n", name);
+    fprintf(stderr, "  %s txstats "__plusstr"\n\n", name);
+#undef __plusstr
 }
 
 
