@@ -42,8 +42,12 @@ static void usage(char *name)
     fprintf(stderr, "  %s help\n\n", name);
     fprintf(stderr, "  %s list\n\n", name);
     fprintf(stderr, "  %s chipid "__plusstr"\n\n", name);
-    fprintf(stderr, "  %s rxstats "__plusstr"\n\n", name);
+    fprintf(stderr, "  statistics commands:\n");
+    fprintf(stderr, "  %s rxstats "__plusstr"\n", name);
     fprintf(stderr, "  %s txstats "__plusstr"\n\n", name);
+    fprintf(stderr, "  register-read/write commands:\n");
+    fprintf(stderr, "  %s rr:<register-address in hex> "__plusstr"\n", name);
+    fprintf(stderr, "  %s rw:<register-address in hex>:<value in hex> "__plusstr"\n\n", name);
 #undef __plusstr
 }
 
@@ -188,6 +192,36 @@ int main(int argc, char **argv) {
 	}
 	fprintf(stderr,"\n\n");
 	fdebugf(stderr,"%i: Bytes = %i\n", __LINE__, nBytes);
+      } else fdebugf(stderr,"%i: %s\n",__LINE__, strerror(errno));
+    }else if ((strcmp(argv[1], "rr") >= 0) || (strcmp(argv[1], "rw") >= 0)) {
+      int	register_addr=0; /* chipid */
+      uint32_t	register_value=0;
+      int	operation=0xa1;
+      char	*helper;
+      /* generate a termination-safe copy for strtok of the argument */
+      memset(&buffer[0], 0, sizeof(buffer));
+      strncpy(&buffer[0], argv[1], sizeof(buffer)-1);
+
+      /* parse the input */
+      helper=strtok(buffer, ":");
+      if (helper)
+	if (strcmp(helper, "rw")==0) operation=0xa0;
+      helper=strtok(NULL,":");
+      if (helper) register_addr=strtol(helper, NULL, 16);
+      helper=strtok(NULL,":");
+      if (helper) register_value=strtol(helper, NULL, 16);
+
+      // connect to the LAN95XX controller
+      if(usbOpenDevice(&handle, busID, deviceID, USBDEV_SHARED_VENDOR, USBDEV_SHARED_PRODUCT, USBDEV_VENDOR_NAME, USBDEV_DEVICE_NAME, "") != 0) {
+	  fprintf(stderr, "Could not find USB device \"LAN95XX\" with vid=0x%x pid=0x%x\n", USBDEV_SHARED_VENDOR, USBDEV_SHARED_PRODUCT);
+	  exit(1);
+      }
+      fdebugf(stderr,"%i: %s LAN95XX controller at register 0x%03x...\n",__LINE__,(operation==0xa0)?"writing":"reading",(unsigned int)register_addr);
+
+      nBytes = usb_control_msg(handle, USB_TYPE_VENDOR | USB_RECIP_DEVICE | ((operation==0xa0)?(USB_ENDPOINT_OUT):(USB_ENDPOINT_IN)), operation, 0, register_addr, (char *)&register_value, sizeof(register_value), 5000);
+      if (nBytes >= 0) {
+	fdebugf(stderr,"%i: Bytes = %i\n", __LINE__, nBytes);
+	fdebugf(stderr,"%i: value: 0x%08x\n",__LINE__,(unsigned int)register_value);
       } else fdebugf(stderr,"%i: %s\n",__LINE__, strerror(errno));
     } else {
           usage(argv[0]);
