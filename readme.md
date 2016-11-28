@@ -37,4 +37,5 @@ All the content is open and freely usable in non commercial applications.
 It would be very kind to mention me in your projects and ask me first if you plan commercial use...
 
 by Stephan Baerwolf (stephan@matrixstorm.com), Schwansee 2016
+
 (who is not bearing any responsibility or guarantee of any kind for his projects)
