@@ -34,6 +34,9 @@
 #	define fdebugf(file, args...) 
 #endif
 
+#ifndef _BV
+#	define _BV(x)	((1)<<(x))
+#endif
 
 static void usage(char *name)
 {
@@ -48,6 +51,9 @@ static void usage(char *name)
     fprintf(stderr, "  register-read/write commands:\n");
     fprintf(stderr, "  %s rr:<register-address in hex> "__plusstr"\n", name);
     fprintf(stderr, "  %s rw:<register-address in hex>:<value in hex> "__plusstr"\n\n", name);
+    fprintf(stderr, "  internal phy-read/write commands:\n");
+    fprintf(stderr, "  %s phyr:<register-address in decimal> "__plusstr"\n", name);
+    fprintf(stderr, "  %s phyw:<register-address in decimal>:<value in hex> "__plusstr"\n\n", name);
 #undef __plusstr
 }
 
@@ -223,6 +229,77 @@ int main(int argc, char **argv) {
 	fdebugf(stderr,"%i: Bytes = %i\n", __LINE__, nBytes);
 	fdebugf(stderr,"%i: value: 0x%08x\n",__LINE__,(unsigned int)register_value);
       } else fdebugf(stderr,"%i: %s\n",__LINE__, strerror(errno));
+
+    }else if((strcmp(argv[1], "phyr") >= 0) || (strcmp(argv[1], "phyw") >= 0)){
+      uint32_t	val;
+      int	register_addr=1; /* basic status register */
+      uint32_t	register_value=0;
+      int	operation=0xa1;
+      char	*helper;
+      /* generate a termination-safe copy for strtok of the argument */
+      memset(&buffer[0], 0, sizeof(buffer));
+      strncpy(&buffer[0], argv[1], sizeof(buffer)-1);
+
+      /* parse the input */
+      helper=strtok(buffer, ":");
+      if (helper)
+	if (strcmp(helper, "phyw")==0) operation=0xa0;
+      helper=strtok(NULL,":");
+      if (helper) register_addr=strtol(helper, NULL, 10);
+      helper=strtok(NULL,":");
+      if (helper) register_value=strtol(helper, NULL, 16);
+
+      if(usbOpenDevice(&handle, busID, deviceID, USBDEV_SHARED_VENDOR, USBDEV_SHARED_PRODUCT, USBDEV_VENDOR_NAME, USBDEV_DEVICE_NAME, "") != 0) {
+	  fprintf(stderr, "Could not find USB device \"LAN95XX\" with vid=0x%x pid=0x%x\n", USBDEV_SHARED_VENDOR, USBDEV_SHARED_PRODUCT);
+	  exit(1);
+      }
+      fdebugf(stderr,"%i: connecting to LAN95XX controller...\n",__LINE__);
+
+#define MII_DATA_REG			(0x118)
+#define MII_ACCESS_REG			(0x114)
+#define MII_ACCESS__MIIBZY_BIT		(0)
+#define MII_ACCESS__MIIWnR_BIT		(1)
+#define MII_ACCESS__MIIPHY_LSB		(6)
+#define MII_ACCESS__MUST_BIT		(11)
+      /* check the MII if it is accessable */
+      nBytes = usb_control_msg(handle, USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_IN, 0xA1, 0, MII_ACCESS_REG, (char *)&val, sizeof(val), 5000);
+      if (nBytes >= 0) {
+	if ((val & _BV(MII_ACCESS__MIIBZY_BIT))==0) {
+	  if (operation==0xa0) {
+	    /* do a phy write - write the MII_DATA_REG first */
+	    val = (register_value&(0xffff));
+	    nBytes = usb_control_msg(handle, USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_OUT, 0xA0, 0, MII_DATA_REG, (char *)&val, sizeof(val), 5000);
+	    val = _BV(MII_ACCESS__MIIWnR_BIT);
+	  } else {
+	    /* do a phy read */
+	    val = 0;
+	  }
+	  if (nBytes >= 0) {
+	    /* continue prepare the value for MII_ACCESS_REG */
+	    val|=_BV(MII_ACCESS__MUST_BIT) | _BV(MII_ACCESS__MIIBZY_BIT) | ((register_addr & 0x1f)<<MII_ACCESS__MIIPHY_LSB);
+	    /* signal the MII_ACCESS_REG the read or write of phy */
+	    nBytes = usb_control_msg(handle, USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_OUT, 0xA0, 0, MII_ACCESS_REG, (char *)&val, sizeof(val), 5000);
+	    while (nBytes >= 0) {
+	      /* poll the MII if it is accessable again */
+	      nBytes = usb_control_msg(handle, USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_IN, 0xA1, 0, MII_ACCESS_REG, (char *)&val, sizeof(val), 5000);
+	      if ((val & _BV(MII_ACCESS__MIIBZY_BIT))==0) {
+		break;
+	      }
+	      fdebugf(stderr,"%i: Bytes = %i (polling)\n", __LINE__, nBytes);
+	    }
+	    if (nBytes >= 0) {
+	      /* read the contents of MII_DATA_REG */
+	      nBytes = usb_control_msg(handle, USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_IN, 0xA1, 0, MII_DATA_REG, (char *)&val, sizeof(val), 5000);
+	      if (nBytes >= 0) {
+		register_value=val;
+		fdebugf(stderr,"%i: Bytes = %i\n", __LINE__, nBytes);
+		fdebugf(stderr,"%i: value: 0x%04x (@phy-addr: %3d)\n",__LINE__,(unsigned int)register_value, (unsigned int)register_addr);
+	      } else fdebugf(stderr,"%i: %s\n",__LINE__, strerror(errno));
+	    } else fdebugf(stderr,"%i: %s\n",__LINE__, strerror(errno));
+	  } else fdebugf(stderr,"%i: %s\n",__LINE__, strerror(errno));
+	} else fdebugf(stderr,"%i: phy is busy right now - please try again later\n",__LINE__);
+      } else fdebugf(stderr,"%i: %s\n",__LINE__, strerror(errno));
+
     } else {
           usage(argv[0]);
      }
