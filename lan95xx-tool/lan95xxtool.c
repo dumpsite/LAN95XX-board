@@ -23,6 +23,11 @@
 #include <inttypes.h>
 #include <errno.h>
 
+#if _WIN32
+#	include <io.h>
+#endif
+
+
 #define USBDEV_SHARED_VENDOR    0x0424
 #define USBDEV_SHARED_PRODUCT   0xEC00
 #define USBDEV_VENDOR_NAME	""
@@ -45,6 +50,7 @@ static void usage(char *name)
     fprintf(stderr, "  %s help\n\n", name);
     fprintf(stderr, "  %s list\n\n", name);
     fprintf(stderr, "  %s chipid "__plusstr"\n\n", name);
+    fprintf(stderr, "  %s eedump "__plusstr"\n\n", name);
     fprintf(stderr, "  statistics commands:\n");
     fprintf(stderr, "  %s rxstats "__plusstr"\n", name);
     fprintf(stderr, "  %s txstats "__plusstr"\n\n", name);
@@ -298,6 +304,54 @@ int main(int argc, char **argv) {
 	    } else fdebugf(stderr,"%i: %s\n",__LINE__, strerror(errno));
 	  } else fdebugf(stderr,"%i: %s\n",__LINE__, strerror(errno));
 	} else fdebugf(stderr,"%i: phy is busy right now - please try again later\n",__LINE__);
+      } else fdebugf(stderr,"%i: %s\n",__LINE__, strerror(errno));
+
+    }else if(strcmp(argv[1], "eedump") == 0){
+#define E2P_CMD_REG			(0x30)
+#define E2P_DATA_REG			(0x34)
+#define E2P_CMD__E2PBZY_BIT		(31)
+      uint32_t	val;
+      int i, allBytes;
+      if(usbOpenDevice(&handle, busID, deviceID, USBDEV_SHARED_VENDOR, USBDEV_SHARED_PRODUCT, USBDEV_VENDOR_NAME, USBDEV_DEVICE_NAME, "") != 0) {
+	  fprintf(stderr, "Could not find USB device \"LAN95XX\" with vid=0x%x pid=0x%x\n", USBDEV_SHARED_VENDOR, USBDEV_SHARED_PRODUCT);
+	  exit(1);
+      }
+      fdebugf(stderr,"%i: connecting to LAN95XX controller...\n",__LINE__);
+
+      nBytes = usb_control_msg(handle, USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_IN, 0xA1, 0, E2P_CMD_REG, (char *)&val, sizeof(val), 5000);
+      if (nBytes >= 0) {
+	if ((val & _BV(E2P_CMD__E2PBZY_BIT)) == 0) {
+
+#if _WIN32
+	  setmode(fileno(stdout), O_BINARY);
+#endif
+	  fdebugf(stderr,"%i: dumping eeprom to stdout...\n",__LINE__);
+	  for (i=0;i<512;i++) {
+	    val=i & 0x1ff;
+	    val|=_BV(E2P_CMD__E2PBZY_BIT);
+
+	    nBytes = usb_control_msg(handle, USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_OUT, 0xA0, 0, E2P_CMD_REG, (char *)&val, sizeof(val), 5000);
+	    if (nBytes < 0) break;
+	    allBytes+=nBytes;
+
+	    while (val & _BV(E2P_CMD__E2PBZY_BIT)) {
+	      usleep(10000);
+	      nBytes = usb_control_msg(handle, USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_IN, 0xA1, 0, E2P_CMD_REG, (char *)&val, sizeof(val), 5000);
+	      if (nBytes < 0) break;
+	      allBytes+=nBytes;
+	    }
+	    if (nBytes < 0) break;
+	    nBytes = usb_control_msg(handle, USB_TYPE_VENDOR | USB_RECIP_DEVICE | USB_ENDPOINT_IN, 0xA1, 0, E2P_DATA_REG, (char *)&val, sizeof(val), 5000);
+	    if (nBytes < 0) break;
+	    allBytes+=nBytes;
+	    fputc(val & 0xff, stdout);
+	    fflush(stdout);
+	  }
+
+	  if (nBytes >= 0) {
+	    fdebugf(stderr,"%i: Bytes = %i (%i total)\n", __LINE__, nBytes, allBytes);
+	  } else fdebugf(stderr,"%i: %s\n",__LINE__, strerror(errno));
+	} else fdebugf(stderr,"%i: eeprom is busy right now - please try again later\n",__LINE__);
       } else fdebugf(stderr,"%i: %s\n",__LINE__, strerror(errno));
 
     } else {
